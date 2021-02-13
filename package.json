@@ -1,0 +1,32 @@
+{
+  "name": "three_js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev_1": "webpack --mode development",
+    "serve": "webpack serve --open 'Firefox'",
+    "dev": "webpack --config webpack.config.js --mode development --env development",
+    "start": "nodemon server.js",
+    "transpile": "./node_modules/.bin/babel src --out-dir dist --presets=@babel/env"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.12.16",
+    "@babel/core": "^7.12.16",
+    "@babel/plugin-transform-modules-commonjs": "^7.12.13",
+    "@babel/preset-env": "^7.12.16",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.2",
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^5.1.0",
+    "script-loader": "^0.7.2",
+    "style-loader": "^2.0.0",
+    "three": "^0.125.2",
+    "webpack": "^5.21.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
