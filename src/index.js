@@ -1,36 +1,57 @@
 import * as THREE from "three";
-
-let camera, scene, renderer;
-let geometry, material, mesh;
-
-init();
-
-function init() {
-  camera = new THREE.PerspectiveCamera(
-    70,
+function Program() {
+  var that = this;
+  this.sceneGroup = new THREE.Group();
+  this.camera = new THREE.PerspectiveCamera(
+    60,
     window.innerWidth / window.innerHeight,
-    0.01,
-    10
+    1,
+    10000
   );
-  camera.position.z = 1;
+  this.camera.position.z = 5000;
+  this.scene = new THREE.Scene();
 
-  scene = new THREE.Scene();
+  this.Init = function () {
+    this.BuildScene();
 
-  geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-  material = new THREE.MeshNormalMaterial();
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(this.renderer.domElement);
 
-  mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
+    this.Animate();
+  };
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setAnimationLoop(animation);
-  document.body.appendChild(renderer.domElement);
+  this.BuildScene = function () {
+    const geometry = new THREE.BoxGeometry(100, 100, 100);
+    const material = new THREE.MeshNormalMaterial();
+    for (let i = 0; i < 1000; i++) {
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.x = Math.random() * 2000 - 1000;
+      mesh.position.y = Math.random() * 2000 - 1000;
+      mesh.position.z = Math.random() * 2000 - 1000;
+
+      //mesh.rotation.x = Math.random() * 2 * Math.PI;
+      //mesh.rotation.y = Math.random() * 2 * Math.PI;
+
+      mesh.matrixAutoUpdate = false;
+      mesh.updateMatrix();
+
+      this.sceneGroup.add(mesh);
+    }
+    this.scene.add(this.sceneGroup);
+  };
+
+  this.Animate = function () {
+    requestAnimationFrame(that.Animate);
+    that.RenderScene();
+  };
+
+  this.RenderScene = function () {
+    this.renderer.render(that.scene, that.camera);
+    that.sceneGroup.rotation.y += 0.01;
+  };
 }
 
-function animation(time) {
-  mesh.rotation.x = time / 2000;
-  mesh.rotation.y = time / 1000;
-
-  renderer.render(scene, camera);
-}
+let p = new Program();
+p.Init();
