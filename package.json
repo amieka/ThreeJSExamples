@@ -4,10 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev_1": "webpack --mode development",
+    "dev": "webpack --mode development",
     "serve": "webpack serve --open 'Firefox'",
-    "dev": "webpack --config webpack.config.js --mode development --env development",
-    "start": "nodemon server.js",
+    "start": "npm run dev && npm run serve",
     "transpile": "./node_modules/.bin/babel src --out-dir dist --presets=@babel/env"
   },
   "keywords": [],
